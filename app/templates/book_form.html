@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2>
+        {% if action == "add" %}
+            <i class="fas fa-plus"></i> افزودن کتاب
+        {% else %}
+            <i class="fas fa-edit"></i> ویرایش کتاب
+        {% endif %}
+    </h2>
+    <a href="/books/landing" class="btn btn-primary">بازگشت</a>
+</div>
+
+<div class="form-card">
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if action == "add" %}
+    <form method="post" action="/books/">
+    {% else %}
+    <form method="post" action="/books/{{ book.isbn }}">
+    {% endif %}
+
+        {% if action == "add" %}
+        <div class="form-group">
+            <label>شابک (ISBN)</label>
+            <input type="text" name="isbn" required placeholder="مثال: 978-1234567890">
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label>عنوان کتاب</label>
+            <input type="text" name="title" required
+                value="{{ book.title if book else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>نویسنده</label>
+            <input type="text" name="author" required
+                value="{{ book.author if book else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>سال انتشار</label>
+            <input type="number" name="year" required
+                value="{{ book.year if book else '' }}">
+        </div>
+
+        <div class="form-group">
+            <label>وضعیت</label>
+            <select name="is_borrowed">
+                <option value="false" {% if book and not book.is_borrowed %}selected{% endif %}>موجود</option>
+                <option value="true" {% if book and book.is_borrowed %}selected{% endif %}>امانت رفته</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            {% if action == "add" %}ثبت کتاب{% else %}ذخیره تغییرات{% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}

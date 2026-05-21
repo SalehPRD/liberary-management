@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-books"></i> کتاب‌ها</h2>
+    <a href="/books/add" class="btn btn-success">
+        <i class="fas fa-plus"></i> افزودن کتاب
+    </a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>شابک</th>
+            <th>عنوان</th>
+            <th>نویسنده</th>
+            <th>سال</th>
+            <th>وضعیت</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.year }}</td>
+            <td>
+                {% if book.is_borrowed %}
+                    <span style="color: #e74c3c;">امانت رفته</span>
+                {% else %}
+                    <span style="color: #27ae60;">موجود</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="/books/edit/{{ book.isbn }}" class="btn btn-warning">ویرایش</a>
+                <a href="/books/delete/{{ book.isbn }}" class="btn btn-danger">حذف</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
