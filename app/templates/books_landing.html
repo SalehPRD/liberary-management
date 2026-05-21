@@ -8,6 +8,25 @@
     </a>
 </div>
 
+<!-- جستجو -->
+<div class="search-bar">
+    <form method="get" action="/books/landing" style="display:flex; gap:10px; width:100%;">
+        <input type="text" name="search" value="{{ search }}" placeholder="جستجو در عنوان، نویسنده یا شابک...">
+        <input type="hidden" name="sort" value="{{ sort }}">
+        <button type="submit" class="btn btn-primary">جستجو</button>
+        <a href="/books/landing" class="btn btn-warning">پاک کردن</a>
+    </form>
+</div>
+
+<!-- مرتب‌سازی -->
+<div style="margin-bottom: 15px; display:flex; gap:10px;">
+    <span>مرتب‌سازی:</span>
+    <a href="{{ base_url }}&sort=title&page=1" class="btn btn-primary {% if sort == 'title' %}active{% endif %}">عنوان</a>
+    <a href="{{ base_url }}&sort=author&page=1" class="btn btn-primary {% if sort == 'author' %}active{% endif %}">نویسنده</a>
+    <a href="{{ base_url }}&sort=year&page=1" class="btn btn-primary {% if sort == 'year' %}active{% endif %}">سال</a>
+    <a href="{{ base_url }}&sort=&page=1" class="btn btn-warning">پیش‌فرض</a>
+</div>
+
 <table>
     <thead>
         <tr>
@@ -41,4 +60,15 @@
         {% endfor %}
     </tbody>
 </table>
+
+<!-- صفحه‌بندی -->
+{% if total_pages > 1 %}
+<div class="pagination">
+    {% for p in range(1, total_pages + 1) %}
+        <a href="{{ base_url }}&page={{ p }}" 
+           class="{% if p == page %}active{% endif %}">{{ p }}</a>
+    {% endfor %}
+</div>
+{% endif %}
+
 {% endblock %}

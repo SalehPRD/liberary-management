@@ -15,11 +15,47 @@ def save_books(books):
         json.dump(books, f, ensure_ascii=False, indent=2)
 
 @router.get("/landing")
-def books_landing(request: Request):
+def books_landing(
+    request: Request,
+    search: str = "",
+    sort: str = "",
+    page: int = 1
+):
     books = load_books()
+
+    # جستجو
+    if search:
+        books = [b for b in books if
+            search.lower() in b["title"].lower() or
+            search.lower() in b["author"].lower() or
+            search.lower() in b["isbn"].lower()
+        ]
+
+    # مرتب‌سازی
+    if sort == "title":
+        books = sorted(books, key=lambda b: b["title"])
+    elif sort == "author":
+        books = sorted(books, key=lambda b: b["author"])
+    elif sort == "year":
+        books = sorted(books, key=lambda b: b["year"])
+
+    # صفحه‌بندی
+    per_page = 5
+    total = len(books)
+    total_pages = max(1, (total + per_page - 1) // per_page)
+    books = books[(page - 1) * per_page: page * per_page]
+
+    base_url = f"/books/landing?search={search}&sort={sort}"
+
     return templates.TemplateResponse(request, "books_landing.html", {
-        "books": books
+        "books": books,
+        "search": search,
+        "sort": sort,
+        "page": page,
+        "total_pages": total_pages,
+        "base_url": base_url
     })
+
 
 @router.get("/add")
 def add_book_form(request: Request):
