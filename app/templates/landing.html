@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-chart-bar"></i> داشبورد کتابخانه</h2>
+</div>
+
+<div class="cards-grid">
+    <div class="card">
+        <i class="fas fa-books"></i>
+        <h3>{{ total_books }}</h3>
+        <p>کل کتاب‌ها</p>
+    </div>
+    <div class="card">
+        <i class="fas fa-bookmark"></i>
+        <h3>{{ borrowed_books }}</h3>
+        <p>کتاب‌های امانت‌رفته</p>
+    </div>
+    <div class="card">
+        <i class="fas fa-check-circle"></i>
+        <h3>{{ available_books }}</h3>
+        <p>کتاب‌های موجود</p>
+    </div>
+    <div class="card">
+        <i class="fas fa-users"></i>
+        <h3>{{ total_members }}</h3>
+        <p>اعضا</p>
+    </div>
+    <div class="card">
+        <i class="fas fa-pen-nib"></i>
+        <h3>{{ unique_authors }}</h3>
+        <p>نویسندگان منحصربه‌فرد</p>
+    </div>
+</div>
+
+{% if oldest_book and newest_book %}
+<div class="cards-grid">
+    <div class="card">
+        <i class="fas fa-history"></i>
+        <h3>{{ oldest_book.year }}</h3>
+        <p>قدیمی‌ترین کتاب: {{ oldest_book.title }}</p>
+    </div>
+    <div class="card">
+        <i class="fas fa-star"></i>
+        <h3>{{ newest_book.year }}</h3>
+        <p>جدیدترین کتاب: {{ newest_book.title }}</p>
+    </div>
+</div>
+{% endif %}
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="/books/landing" class="btn btn-primary" style="margin-left: 15px;">
+        <i class="fas fa-books"></i> مدیریت کتاب‌ها
+    </a>
+    <a href="/members/landing" class="btn btn-success">
+        <i class="fas fa-users"></i> مدیریت اعضا
+    </a>
+</div>
+{% endblock %}

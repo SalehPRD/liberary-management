@@ -1,0 +1,14 @@
+[
+  {
+    "member_id": "M001",
+    "name": "محمد رضایی",
+    "email": "mohammad@example.com",
+    "phone": "09121234567"
+  },
+  {
+    "member_id": "M002",
+    "name": "فاطمه حسینی",
+    "email": "fatemeh@example.com",
+    "phone": "09359876543"
+  }
+]
