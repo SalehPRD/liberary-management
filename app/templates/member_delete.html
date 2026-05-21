@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h2><i class="fas fa-trash"></i> حذف عضو</h2>
+    <a href="/members/landing" class="btn btn-primary">بازگشت</a>
+</div>
+
+<div class="form-card" style="text-align: center;">
+    <p style="font-size: 1.2rem; margin-bottom: 20px;">
+        آیا مطمئن هستید که می‌خواهید عضو زیر را حذف کنید؟
+    </p>
+    <p style="font-size: 1.1rem; color: #e74c3c; margin-bottom: 30px;">
+        <strong>{{ member.name }}</strong> - {{ member.email }}
+    </p>
+
+    <form method="post" action="/members/delete/{{ member.member_id }}">
+        <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash"></i> بله، حذف کن
+        </button>
+        <a href="/members/landing" class="btn btn-primary" style="margin-right: 10px;">
+            انصراف
+        </a>
+    </form>
+</div>
+{% endblock %}
